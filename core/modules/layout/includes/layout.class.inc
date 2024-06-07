@@ -109,6 +109,13 @@ class Layout {
   var $relationships = array();
 
   /**
+   * A custom theme used by this layout.
+   *
+   * @var string|NULL
+   */
+  var $custom_theme = NULL;
+
+  /**
    * A LayoutMenuItem containing menu properties for this layout.
    *
    * Layouts that are at user-defined paths (not overriding a module) must have
@@ -299,6 +306,7 @@ class Layout {
       'weight' => $this->weight,
       'storage' => $this->storage,
       'layout_template' => $this->layout_template,
+      'custom_theme' => $this->custom_theme,
       'disabled' => $this->disabled,
       'settings' => $this->settings,
       'positions' => $this->positions,

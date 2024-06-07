@@ -2659,3 +2659,19 @@ function _layout_clean_custom_css($classes = array()) {
 function layout_field_delete_instance($instance) {
   cache('layout_path')->flush();
 }
+
+/**
+ * Implements hook_custom_theme().
+ */
+function layout_custom_theme() {
+  // Get the current item.
+  $item = menu_get_item();
+  // Get the layout in use by the current item.
+  $layout = layout_get_layout_by_path(NULL, $item);
+  // Attempt to retrieve a custom theme settings for this layout.
+  $theme = $layout->custom_theme;
+  // If a setting is returned, define this as the custom theme.
+  if ($theme) {
+    return $theme;
+  }
+}

@@ -724,6 +724,35 @@ function layout_settings_form($form, &$form_state, Layout $layout) {
     ),
   );
 
+  // Allow users to set a custom theme on non-default themes.
+  $form['custom_theme'] = array(
+    '#title' => t('Custom Theme'),
+    '#type' => 'item',
+    '#access' => !$layout->isDefault(),
+  );
+  $form['custom_theme']['enable'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use custom theme on this layout.'),
+    '#default_value' => (is_null($layout->custom_theme)) ? FALSE : TRUE,
+    '#access' => !$layout->isDefault(),
+  );
+
+  // Get the options for the themes.
+  $options = layout_get_custom_theme_options();
+
+  $form['custom_theme']['theme'] = array(
+    '#type' => 'select',
+    '#title' => 'Custom theme',
+    '#options' => $options,
+    '#empty_option' => '- Select theme -',
+    '#default_value' => (is_null($layout->custom_theme)) ? '' : $layout->custom_theme,
+    '#states' => array(
+      'visible' => array(':input[name="custom_theme[enable]"]' => array('checked' => TRUE)),
+      'required' => array(':input[name="custom_theme[enable]"]' => array('checked' => TRUE)),
+    ),
+    '#access' => !$layout->isDefault(),
+  );
+
   $form['conditions']['active'] = array(
     '#type' => 'container',
     '#theme' => 'layout_conditions',
@@ -970,6 +999,16 @@ function layout_settings_form_update_layout($form, &$form_state) {
   }
   if (isset($form_state['values']['path'])) {
     $layout->setPath($form_state['values']['path']);
+  }
+  // Check if custom theme is enabled on the form.
+  if ($form_state['values']['custom_theme']['enable']) {
+    // If so, set the layout custom_theme property with the machine name of
+    // this theme.
+    $layout->custom_theme = $form_state['values']['custom_theme']['theme'];
+  }
+  else {
+    // If not, set the layout custom_theme property to NULL.
+    $layout->custom_theme = NULL;
   }
 
   // Update contexts.
@@ -1716,6 +1755,28 @@ function layout_block_configure_form($form, &$form_state, Layout $layout, Block 
   }
 
   return $form;
+}
+
+/**
+ * Helper function to get custom theme options.
+ *
+ * @return array
+ *   An array of all enabled, non-hidden themes with machine name and label.
+ */
+function layout_get_custom_theme_options() {
+  // Get current list of themes.
+  $themes = system_rebuild_theme_data();
+  // Define array to collect options.
+  $custom_theme_options = array();
+  // Loop through all themes.
+  foreach ($themes as $theme) {
+    // Check if enabled and not hidden.
+    if ($theme->status && empty($theme->info['hidden'])) {
+      // Add to array using machine name as key and label as value.
+      $custom_theme_options[$theme->name] = $theme->info['name'];
+    }
+  }
+  return $custom_theme_options;
 }
 
 /**
