@@ -1711,6 +1711,7 @@ function drupal_tempnam($directory, $prefix) {
  * Creates a .htaccess file in the given directory.
  *
  * @deprecated since 1.0.0
+ * @see file_save_htaccess()
  */
 function file_create_htaccess($directory, $private = TRUE, $force_overwrite = FALSE) {
   watchdog_deprecated_function('drupal', __FUNCTION__);
@@ -2212,6 +2213,7 @@ function drupal_match_path($path, $patterns) {
  *
  * @deprecated since 1.0.0
  */
+// cspell:disable-next-line
 function drupal_path_alias_whitelist_rebuild($source = NULL) {
   watchdog_deprecated_function('drupal', __FUNCTION__);
   return array();
@@ -2224,6 +2226,7 @@ function drupal_path_alias_whitelist_rebuild($source = NULL) {
  */
 function drupal_path_alias_allowlist_rebuild($source = NULL) {
   watchdog_deprecated_function('drupal', __FUNCTION__);
+  // cspell:disable-next-line
   return drupal_path_alias_whitelist_rebuild();
 }
 
