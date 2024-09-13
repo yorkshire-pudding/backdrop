@@ -2164,8 +2164,9 @@ function taxonomy_config_info() {
 function taxonomy_config_create_validate(Config $staging_config, $all_changes) {
   $config_name = $staging_config->getName();
 
-  // Ensure entity types and bundles exist or will be imported.
-  if (strpos($config_name, 'taxonomy.vocabulary.') === 0) {
+  // Ensure the taxonomy vocabulary exists before importing fields. First check
+  // this is a config file for a taxonomy vocabulary field.
+  if (strpos($config_name, 'taxonomy.vocabulary.') === 0 && substr_count($config_name, '.') > 2) {
     list($vocabulary_name, $field_name) = explode('.', str_replace('taxonomy.vocabulary.', '', $config_name));
 
     // Check that the vocabulary does or will exist.
