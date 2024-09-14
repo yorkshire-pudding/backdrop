@@ -843,7 +843,8 @@ function backdrop_install_config_location() {
 
   if ($settings['config_active_class'] === 'ConfigFileStorage') {
     $is_empty = empty($config_directories['active']);
-    $is_default_file_storage = $config_directories['active'] === 'files/config_' . md5(implode(',', $database)) . '/active';
+    $database_string = is_array($database) ? implode(',', $database) : $database;
+    $is_default_file_storage = $config_directories['active'] === 'files/config_' . md5($database_string) . '/active';
 
     // Add a randomized config directory name to settings.php, unless it was
     // manually defined in the existing already.
