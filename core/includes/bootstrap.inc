@@ -907,6 +907,14 @@ function backdrop_settings_initialize() {
       if (!isset($database['port'])) {
         $database['port'] = NULL;
       }
+      // Add default charset if not set in the array.
+      if (!isset($database['charset'])) {
+        $database['charset'] = 'utf8mb4';
+      }
+      // Add default collation if not set in the array.
+      if (!isset($database['collation'])) {
+        $database['collation'] = 'utf8mb4_general_ci';
+      }
       $databases['default']['default'] = $database;
       $database_is_set = TRUE;
     }

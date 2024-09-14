@@ -9,7 +9,7 @@
  *
  * Most sites can configure their database by entering the connection details
  * below. If you need to:
- *   - customize the 'port', 'prefix', or 'driver'
+ *   - customize the 'port', 'prefix', 'charset', 'collation' or 'driver'
  *   - use primary/replica databases
  *   - use multiple connections
  * see the advanced database documentation at

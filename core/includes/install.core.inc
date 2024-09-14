@@ -1081,27 +1081,19 @@ function install_settings_form_submit($form, &$form_state) {
   );
   // Include the driver if it is not 'mysql'.
   if ($db_settings['driver'] != 'mysql') {
-    $settings['database']['driver'] = $db_settings['driver'];
+    $settings['database']['value']['driver'] = $db_settings['driver'];
   }
   // Include the prefix if one has been set.
   if (!empty($db_settings['prefix'])) {
-    $settings['database']['prefix'] = $db_settings['prefix'];
+    $settings['database']['value']['prefix'] = $db_settings['prefix'];
   }
   // Include the port if the default has been overridden.
   if ($db_settings['port']) {
-    $settings['database']['port'] = $db_settings['port'];
+    $settings['database']['value']['port'] = $db_settings['port'];
   }
+  $settings['database']['value']['charset'] = 'utf8mb4';
+  $settings['database']['value']['collation'] = 'utf8mb4_general_ci';
   backdrop_rewrite_settings($settings);
-
-  // Check if UTF-8 MB4 support exists in the database and add to settings.php.
-  if (install_verify_database_utf8mb4()) {
-    $settings = array();
-    $settings['database_charset'] = array(
-      'value' => 'utf8mb4',
-      'required' => TRUE,
-    );
-    backdrop_rewrite_settings($settings);
-  }
 
   // Indicate that the settings file has been verified, and check the database
   // for the last completed task, now that we have a valid connection. This

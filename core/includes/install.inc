@@ -482,15 +482,23 @@ abstract class DatabaseTasks {
           );
           // Include the driver if it is not 'mysql'.
           if ($db_settings['driver'] != 'mysql') {
-            $settings['database']['driver'] = $db_settings['driver'];
+            $settings['database']['value']['driver'] = $db_settings['driver'];
           }
           // Include the prefix if one has been set.
           if (!empty($db_settings['prefix'])) {
-            $settings['database']['prefix'] = $db_settings['prefix'];
+            $settings['database']['value']['prefix'] = $db_settings['prefix'];
           }
           // Include the port if the default has been overridden.
           if ($db_settings['port']) {
-            $settings['database']['port'] = $db_settings['port'];
+            $settings['database']['value']['port'] = $db_settings['port'];
+          }
+          // Include the charset if the default has been overridden.
+          if ($db_settings['charset']) {
+            $settings['database']['value']['charset'] = $db_settings['charset'];
+          }
+          // Include the collation if the default has been overridden.
+          if ($db_settings['collation']) {
+            $settings['database']['value']['collation'] = $db_settings['collation'];
           }
           backdrop_rewrite_settings($settings);
         }
