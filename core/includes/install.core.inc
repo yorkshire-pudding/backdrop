@@ -1091,8 +1091,8 @@ function install_settings_form_submit($form, &$form_state) {
   if ($db_settings['port']) {
     $settings['database']['value']['port'] = $db_settings['port'];
   }
-  $settings['database']['value']['charset'] = 'utf8mb4';
-  $settings['database']['value']['collation'] = 'utf8mb4_general_ci';
+  $settings['database']['value']['charset'] = $db_settings['charset'];
+  $settings['database']['value']['collation'] = $db_settings['collation'];
   backdrop_rewrite_settings($settings);
 
   // Indicate that the settings file has been verified, and check the database
