@@ -1079,6 +1079,12 @@ function install_settings_form_submit($form, &$form_state) {
     ),
     'required' => TRUE,
   );
+
+  // If UTF-8 MB4 is not supported, use the old UTF-8 charset.
+  if (install_verify_database_utf8mb4() === FALSE && $db_settings['charset'] === 'utf8mb4') {
+    $db_settings['charset'] = 'utf8';
+  }
+
   // Include the driver if it is not 'mysql'.
   if ($db_settings['driver'] != 'mysql') {
     $settings['database']['value']['driver'] = $db_settings['driver'];

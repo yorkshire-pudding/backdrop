@@ -59,8 +59,8 @@ $database = array(
  * $config_directories['staging'] = '/home/myusername/config/staging';
  * @endcode
  */
-$config_directories['active'] = 'files/config_' . md5(implode(',', $database)) . '/active';
-$config_directories['staging'] = 'files/config_' . md5(implode(',', $database)) . '/staging';
+$config_directories['active'] = 'files/config_' . md5(serialize($database)) . '/active';
+$config_directories['staging'] = 'files/config_' . md5(serialize($database)) . '/staging';
 
 /**
  * Skip the configuration staging directory cleanup
