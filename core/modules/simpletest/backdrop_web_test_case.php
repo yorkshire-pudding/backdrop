@@ -957,14 +957,14 @@ class BackdropWebTestCase extends BackdropTestCase {
   /**
    * The content of the page currently loaded in the internal browser.
    *
-   * @var string
+   * @var string|false
    */
   protected $content;
 
   /**
    * The content of the page currently loaded in the internal browser (plain text version).
    *
-   * @var string
+   * @var string|false
    */
   protected $plainTextContent;
 
@@ -998,7 +998,7 @@ class BackdropWebTestCase extends BackdropTestCase {
   protected $cookieFile = NULL;
 
   /**
-   * An array of cookies set in the most recent cURL request.
+   * The cookies of the page currently loaded in the internal browser.
    *
    * @var array
    */
@@ -1586,6 +1586,10 @@ class BackdropWebTestCase extends BackdropTestCase {
     $config_directories['active'] = $config_base_path . 'active';
     $config_directories['staging'] = $config_base_path . 'staging';
 
+    // Set the new backup directories. During test execution, these values are
+    // manually set directly in backup_get_backup_directory().
+    $settings['backup_directory'] = 'files/simpletest/' . $this->fileDirectoryName . '/backups';
+
     // Log fatal errors.
     ini_set('log_errors', 1);
     ini_set('error_log', $this->public_files_directory . '/error.log');
@@ -1953,8 +1957,10 @@ class BackdropWebTestCase extends BackdropTestCase {
     $language = $this->originalLanguage;
     $language_url = $this->originalLanguageUrl;
 
-    // Close the CURL handler.
+    // Close the CURL handler and reset the cookies array, so that test classes
+    // containing multiple tests are not polluted.
     $this->curlClose();
+    $this->cookies = array();
   }
 
   /**
