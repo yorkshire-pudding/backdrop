@@ -2890,14 +2890,14 @@ function node_update_1024(&$sandbox) {
   // Once the batch is finished, return a final progress update.
   if ($sandbox['#finished'] === TRUE) {
     if ($test_progress_max) {
-      $final_message = t('!progress of !max node revision records updated.', array(
+      $final_message = format_string('!progress of !max node revision records updated.', array(
         '!progress' => $sandbox['progress'],
         '!max' => $sandbox['max'],
       ));
       return $final_message;
     }
     else {
-      $final_message = t('Only !progress of !max node revision records were updated. Check the logs and re-run the update hook.', array(
+      $final_message = format_string('Only !progress of !max node revision records were updated. Check the logs and re-run the update hook.', array(
         '!progress' => $sandbox['progress'],
         '!max' => $sandbox['max'],
       ));
