@@ -2877,7 +2877,7 @@ function node_update_1024(&$sandbox) {
         'timestamp=' . $record['timestamp'],
       );
       $exception_data_string = ' <em>' . get_class($e) . '</em>: ' . $e->getMessage();
-      $exception_data_string .= ' <em>Data:</em> ' . implode(', ', $exception_data);
+      $exception_data_string .= ' <em>node_revision data record:</em> ' . implode(', ', $exception_data);
       watchdog_exception('Node Update', $e, $exception_data_string);
     }
   }
